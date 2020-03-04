@@ -79,5 +79,20 @@ namespace Shoes_Store.Data.Service
 
             }
         }
+
+        public async Task<int> UpdateAccount(UpdateAccountViewModel model)
+        {
+            var account = _unitOfWork.AccountRepository.Get(c => c.Username == model.Username);
+            var result = account.FirstOrDefault();
+            if(result == null)
+            {
+                throw new Exception("Account not found");
+            }
+            result.Password = model.Password;
+            result.FullName = model.Fullname;
+            result.Address = model.Address;
+            _unitOfWork.AccountRepository.Update(result);
+            return _unitOfWork.Save();
+        }
     }
 }
