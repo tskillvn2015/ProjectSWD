@@ -6,6 +6,7 @@ using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Entities;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
+using Shoes_Store.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,6 +23,7 @@ namespace Shoes_Store.Data.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
+        private readonly IApiResponse _IApiResponse;
         public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _configuration=configuration;
@@ -78,6 +80,16 @@ namespace Shoes_Store.Data.Service
                 return result;
 
             }
+        }
+
+        public async Task<object> GetUser(string Username)
+        {
+            var account = _unitOfWork.AccountRepository.Get(x => x.Username.Equals(Username));
+            if(account.FirstOrDefault() == null)
+            {
+                throw new Exception()
+            }
+            return null;
         }
     }
 }

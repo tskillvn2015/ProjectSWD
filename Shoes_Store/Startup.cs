@@ -21,10 +21,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Shoes_Store.Common;
 using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.Repositories;
 using Shoes_Store.Data.Service;
+using Shoes_Store.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Shoes_Store
@@ -61,6 +63,7 @@ namespace Shoes_Store
             //DI
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IApiResponse, ApiResponse>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
