@@ -27,5 +27,7 @@ namespace Shoes_Store.Data.Entities
         public Account Accounts { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsDelete { get; set; }
     }
 }
