@@ -94,20 +94,11 @@ namespace Shoes_Store.Data.Service
                 signingCredentials: creds,
                 claims: claims);
 
-                var result = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
-                return result;
+                return token;
 
             }
         }
 
-        public async Task<object> GetUser(string Username)
-        {
-            var account = _unitOfWork.AccountRepository.Get(x => x.Username.Equals(Username));
-            if(account.FirstOrDefault() == null)
-            {
-                throw new Exception();
-            }
-            return null;
-        }
-    }
+        
+    
 }
