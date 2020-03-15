@@ -64,24 +64,35 @@ namespace Shoes_Store.Data.Service
                 {
                     throw new Exception("User not found");
                 }
-                var claims = new Claim[]
-                {
-                    new Claim(ClaimTypes.Role,user.Role.ToString()),
-                };
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token = new JwtSecurityToken(_configuration["Tokens:Issuer"],
-                    _configuration["Tokens:Issuer"],
-                    // claims,
-                    expires: DateTime.Now.AddHours(2),
-                    signingCredentials: creds,
-                    claims: claims);
+                var token = GenerateJwtToken(user);
 
                 var result = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
                 return result;
 
             }
+        }
+
+        //Generate Jwt Token
+        private JwtSecurityToken GenerateJwtToken(Account user)
+        {
+            var claims = new Claim[]
+                {
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("Username",user.Username),
+                    new Claim(ClaimTypes.Role,user.Role.ToString()),
+                };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_configuration["Tokens:Issuer"],
+                _configuration["Tokens:Issuer"],
+                // claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: creds,
+                claims: claims);
+
+            return token;
         }
     }
 }

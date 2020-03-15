@@ -24,5 +24,7 @@ namespace Shoes_Store.Data.Entities
 
         [ForeignKey("IdOrder")]
         public Order Order { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsDelete { get; set; }
     }
 }
