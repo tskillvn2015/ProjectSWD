@@ -87,7 +87,7 @@ namespace Shoes_Store.Data.Service
             var account = _unitOfWork.AccountRepository.Get(x => x.Username.Equals(Username));
             if(account.FirstOrDefault() == null)
             {
-                throw new Exception()
+                throw new Exception();
             }
             return null;
         }
