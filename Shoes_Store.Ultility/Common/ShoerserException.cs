@@ -8,7 +8,11 @@ namespace Shoes_Store.Ultility.Common
     {
         public class AccountException
         {
-            public string A01 = "Username not found";
+            public const string A01 = "Username not found";
+        }
+        public class ProductException
+        {
+            public const string P01 = "Produt bi loi";
         }
     }
 }

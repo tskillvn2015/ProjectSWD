@@ -7,6 +7,7 @@ using Shoes_Store.Data.Entities;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
 using Shoes_Store.Interfaces;
+using Shoes_Store.Ultility.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,10 +24,11 @@ namespace Shoes_Store.Data.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
-        private readonly IApiResponse _IApiResponse;
-        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        private readonly IApiResponse _apiResponse;
+        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration,IApiResponse apiResponse)
         {
-            _configuration=configuration;
+            _apiResponse = apiResponse;
+            _configuration =configuration;
             _unitOfWork = unitOfWork;
             _connectionString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
@@ -64,12 +66,14 @@ namespace Shoes_Store.Data.Service
                 var user = rs.FirstOrDefault();
                 if (user == null)
                 {
-                    throw new Exception("User not found");
+                    return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
                 }
 
                 var token = GenerateJwtToken(user);
+                var tokenString = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
 
-                var result = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                var result = _apiResponse.Ok(tokenString);
+
                 return result;
 
             }
