@@ -60,6 +60,7 @@ namespace Shoes_Store
             services.AddDbContext<ShoeserDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:ShoeserSolutionDb"]));
             //DI
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers()
