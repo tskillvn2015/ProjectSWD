@@ -35,16 +35,5 @@ namespace Shoes_Store.Controllers
             else
                 return BadRequest();
         }
-
-        [HttpPut]
-        [Route("api/account/update")]
-        public async Task<IActionResult> UpdateAccount([FromBody]UpdateAccountViewModel model)
-        {
-            var rs = await _accountService.UpdateAccount(model);
-            if (rs > 0)
-                return Ok(rs);
-            else
-                return BadRequest();
-        }
     }
 }
