@@ -14,5 +14,9 @@ namespace Shoes_Store.Ultility.Common
         {
             public const string P01 = "Produt bi loi";
         }
+        public class OrderException
+        {
+            public const string O01 = "";
+        }
     }
 }

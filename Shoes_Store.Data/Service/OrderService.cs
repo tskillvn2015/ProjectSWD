@@ -2,6 +2,7 @@
 using Shoes_Store.Data.Entities;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
+using Shoes_Store.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +14,24 @@ namespace Shoes_Store.Data.Service
     public class OrderService: IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-       
-        public OrderService(IUnitOfWork unitOfWork)
+        private readonly IApiResponse _apiResponse;
+
+        public OrderService(IUnitOfWork unitOfWork, IApiResponse apiResponse)
         {
             _unitOfWork = unitOfWork;
+            _apiResponse = apiResponse;
         }
 
-        public async Task<object> CreateOrder(OrderViewModel model)
+        public async Task<Object> CreateOrder(OrderViewModel model)
         {
-            var result = _unitOfWork.OrderRepository.Get(c => c.NameOrder.Equals(model.NameOrder));
-            if(result.FirstOrDefault() != null)
-            {
-                throw new Exception("This name order already exist!");
-            }
-            var order = new Order
-            {
-                NameOrder = model.NameOrder,
-                CreatedDate = model.CreatedDate,
-                //Accounts = model.Accounts,
-                TotalPrice = model.TotalPrice,
-                IdAccount = model.IdAccount,
-                //OrderDetails = model.OrderDetails,
-            };
+            Order order = new Order();
+            order.NameOrder = model.NameOrder;
+            order.CreatedDate = DateTime.Now;
+            order.TotalPrice = model.TotalPrice;
+            order.IdAccount = model.IdAccount;
             _unitOfWork.OrderRepository.Add(order);
-            return _unitOfWork.Save();
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
         }
 
        public async Task<int> DeleteOrder(deleteOrderVMs model)
