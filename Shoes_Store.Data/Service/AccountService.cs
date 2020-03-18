@@ -32,7 +32,7 @@ namespace Shoes_Store.Data.Service
             _unitOfWork = unitOfWork;
             _connectionString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
-        public async Task<int> Register(RegisterViewModel model)
+        public async Task<object> Register(RegisterViewModel model)
         {
             var result = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
             if(result.FirstOrDefault() != null)
@@ -48,7 +48,7 @@ namespace Shoes_Store.Data.Service
                 Address=model.Address,
             };
             _unitOfWork.AccountRepository.Add(account);
-            return  _unitOfWork.Save();
+            return _apiResponse.Ok(_unitOfWork.Save()) ;
         }
         public async Task<Object> Login(LoginViewModel model)
         {
