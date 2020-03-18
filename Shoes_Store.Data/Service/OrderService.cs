@@ -16,12 +16,14 @@ namespace Shoes_Store.Data.Service
         private readonly IConfiguration _configuration;
         private readonly string _connecString;
 
+       
         public OrderService(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _configuration = configuration;
             _unitOfWork = unitOfWork;
             _connecString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
+
         public async Task<int> CreateOrder(OrderViewModel model)
         {
             var result = _unitOfWork.OrderRepository.Get(c => c.NameOrder.Equals(model.NameOrder));
@@ -39,6 +41,17 @@ namespace Shoes_Store.Data.Service
                 OrderDetails = model.OrderDetails,
             };
             _unitOfWork.OrderRepository.Add(order);
+            return _unitOfWork.Save();
+        }
+
+       public async Task<int> DeleteOrder(deleteOrderVMs model)
+        {
+            var result = _unitOfWork.OrderRepository.Get(c=>c.Id.Equals(model.Id));
+            if(result.FirstOrDefault() == null)
+            {
+                throw new Exception("This id order not exist!");
+            }
+            _unitOfWork.OrderRepository.Delete(result);
             return _unitOfWork.Save();
         }
     }

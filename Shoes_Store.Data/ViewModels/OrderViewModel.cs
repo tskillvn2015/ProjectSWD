@@ -23,9 +23,15 @@ namespace Shoes_Store.Data.ViewModels
 
         public Guid IdAccount { get; set; }
 
-        [ForeignKey("IdAccount")]
-        public Account Accounts { get; set; }
+        //[ForeignKey("IdAccount")]
+        //public Account Accounts { get; set; }
 
-        public List<OrderDetail> OrderDetails { get; set; }
+        //public List<OrderDetail> OrderDetails { get; set; }
+    }
+
+    public class deleteOrderVMs
+    {
+        [Required]
+        public Guid Id { get; set; }
     }
 }
