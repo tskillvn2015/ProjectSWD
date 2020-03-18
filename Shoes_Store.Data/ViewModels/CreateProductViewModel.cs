@@ -8,6 +8,7 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class CreateProductViewModel
     {
+        [Required]
         public String Name { get; set; }
         [Required]
         public String Manufacturer { get; set; }
