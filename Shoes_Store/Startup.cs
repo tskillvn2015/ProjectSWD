@@ -18,13 +18,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Shoes_Store.Common;
 using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.Repositories;
 using Shoes_Store.Data.Service;
+using Shoes_Store.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Shoes_Store
@@ -62,6 +65,7 @@ namespace Shoes_Store
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IApiResponse, ApiResponse>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
@@ -138,7 +142,7 @@ namespace Shoes_Store
             ///
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -171,6 +175,10 @@ namespace Shoes_Store
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors(opt =>
+                opt.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()
+            );
 
             app.UseEndpoints(endpoints =>
             {

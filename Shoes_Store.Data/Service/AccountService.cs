@@ -6,6 +6,8 @@ using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Entities;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
+using Shoes_Store.Interfaces;
+using Shoes_Store.Ultility.Common;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,15 +24,21 @@ namespace Shoes_Store.Data.Service
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
-        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        private readonly IApiResponse _apiResponse;
+        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration,IApiResponse apiResponse)
         {
-            _configuration=configuration;
+            _apiResponse = apiResponse;
+            _configuration =configuration;
             _unitOfWork = unitOfWork;
             _connectionString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
         public async Task<int> Register(RegisterViewModel model)
         {
-
+            var result = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
+            if(result.FirstOrDefault() != null)
+            {
+                throw new Exception("This username already exist!");
+            }
             var account = new Account
             {
                 Username = model.Username,
@@ -58,41 +66,43 @@ namespace Shoes_Store.Data.Service
                 var user = rs.FirstOrDefault();
                 if (user == null)
                 {
-                    throw new Exception("User not found");
+                    return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
                 }
-                var claims = new Claim[]
-                {
-                    new Claim(ClaimTypes.Role,user.Role.ToString()),
-                };
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                var token = new JwtSecurityToken(_configuration["Tokens:Issuer"],
-                    _configuration["Tokens:Issuer"],
-                    // claims,
-                    expires: DateTime.Now.AddHours(2),
-                    signingCredentials: creds,
-                    claims: claims);
+                var token = GenerateJwtToken(user);
+                var tokenString = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
 
-                var result = (new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+                var result = _apiResponse.Ok(tokenString);
+
                 return result;
 
             }
         }
 
-        public async Task<int> UpdateAccount(UpdateAccountViewModel model)
+        //Generate Jwt Token
+        private JwtSecurityToken GenerateJwtToken(Account user)
         {
-            var account = _unitOfWork.AccountRepository.Get(c => c.Username == model.Username);
-            var result = account.FirstOrDefault();
-            if(result == null)
-            {
-                throw new Exception("Account not found");
+            var claims = new Claim[]
+                {
+                    new Claim("Id",user.Id.ToString()),
+                    new Claim("Username",user.Username),
+                    new Claim(ClaimTypes.Role,user.Role.ToString()),
+                };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(_configuration["Tokens:Issuer"],
+                _configuration["Tokens:Issuer"],
+                // claims,
+                expires: DateTime.Now.AddHours(2),
+                signingCredentials: creds,
+                claims: claims);
+
+                return token;
+
             }
-            result.Password = model.Password;
-            result.FullName = model.Fullname;
-            result.Address = model.Address;
-            _unitOfWork.AccountRepository.Update(result);
-            return _unitOfWork.Save();
         }
-    }
+
+        
+    
 }

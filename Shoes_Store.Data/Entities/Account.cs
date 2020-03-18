@@ -23,5 +23,7 @@ namespace Shoes_Store.Data.Entities
         public Role Role { get; set; }
         public List<History> Historys { get; set; }
         public List<Order> Orders { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool IsDelete { get; set; }
     }
 }
