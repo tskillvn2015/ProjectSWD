@@ -13,18 +13,13 @@ namespace Shoes_Store.Data.Service
     public class OrderService: IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IConfiguration _configuration;
-        private readonly string _connecString;
-
        
-        public OrderService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public OrderService(IUnitOfWork unitOfWork)
         {
-            _configuration = configuration;
             _unitOfWork = unitOfWork;
-            _connecString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
 
-        public async Task<int> CreateOrder(OrderViewModel model)
+        public async Task<object> CreateOrder(OrderViewModel model)
         {
             var result = _unitOfWork.OrderRepository.Get(c => c.NameOrder.Equals(model.NameOrder));
             if(result.FirstOrDefault() != null)
@@ -35,10 +30,10 @@ namespace Shoes_Store.Data.Service
             {
                 NameOrder = model.NameOrder,
                 CreatedDate = model.CreatedDate,
-                Accounts = model.Accounts,
+                //Accounts = model.Accounts,
                 TotalPrice = model.TotalPrice,
                 IdAccount = model.IdAccount,
-                OrderDetails = model.OrderDetails,
+                //OrderDetails = model.OrderDetails,
             };
             _unitOfWork.OrderRepository.Add(order);
             return _unitOfWork.Save();
@@ -54,5 +49,7 @@ namespace Shoes_Store.Data.Service
             _unitOfWork.OrderRepository.Delete(result);
             return _unitOfWork.Save();
         }
+
+        
     }
 }

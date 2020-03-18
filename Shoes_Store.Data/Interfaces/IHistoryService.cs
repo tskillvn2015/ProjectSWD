@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Shoes_Store.Data.Interfaces
 {
-    public interface IOrderService
+    public interface IHistoryService
     {
-        Task<object> CreateOrder(OrderViewModel model);
-        Task<int> DeleteOrder(deleteOrderVMs model);
-        
-
-
+        object GetHistoryById(HistoryViewModel model);
+        Task<object> GetAllHistory(HistoryViewModel model);
     }
 }
