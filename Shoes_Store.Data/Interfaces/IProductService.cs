@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Shoes_Store.Data.Entities;
 using System.Threading.Tasks;
+using Shoes_Store.Data.ViewModels;
 
 namespace Shoes_Store.Data.Interfaces
 {
     public interface IProductService
     {
-        Task<int> CreateProduct(Product model);
+        Task<int> CreateProduct(CreateProductViewModel model);
     }
 }
