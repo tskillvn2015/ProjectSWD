@@ -36,8 +36,11 @@ namespace Shoes_Store.Controllers
                 return BadRequest();
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
+=======
+>>>>>>> 46a471f8e1485eb125b5ffdb2b75c4e54e71f678
 
         [HttpGet]
         [Route("api/Accounts")]
@@ -46,6 +49,9 @@ namespace Shoes_Store.Controllers
             var rs = await _accountService.GetUserPagging(model);
             return Ok(rs);
         }
+<<<<<<< HEAD
+>>>>>>> 46a471f8e1485eb125b5ffdb2b75c4e54e71f678
+=======
 >>>>>>> 46a471f8e1485eb125b5ffdb2b75c4e54e71f678
     }
 }
