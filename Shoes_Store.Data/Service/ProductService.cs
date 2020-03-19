@@ -69,6 +69,10 @@ namespace Shoes_Store.Data.Service
         public async Task<Object> UpdateProduct(UpdateProductViewModel model)
         {
             Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
+            if (product == null)
+            {
+                return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));
+            }
             product.Name = model.Name;
             product.Manufacturer = model.Manufacturer;
             product.Size = model.Size;
@@ -96,6 +100,10 @@ namespace Shoes_Store.Data.Service
         public async Task<Object> DeleteProduct(DeleteProductViewModel model)
         {
             Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
+            if (product == null)
+            {
+                return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));
+            }
             product.IsDelete = true;
             _unitOfWork.ProductRepository.Update(product);
             var result = _apiResponse.Ok(_unitOfWork.Save());
