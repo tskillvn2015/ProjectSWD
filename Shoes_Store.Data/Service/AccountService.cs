@@ -25,30 +25,30 @@ namespace Shoes_Store.Data.Service
         private readonly IConfiguration _configuration;
         private readonly string _connectionString;
         private readonly IApiResponse _apiResponse;
-        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration,IApiResponse apiResponse)
+        public AccountService(IUnitOfWork unitOfWork, IConfiguration configuration, IApiResponse apiResponse)
         {
             _apiResponse = apiResponse;
-            _configuration =configuration;
+            _configuration = configuration;
             _unitOfWork = unitOfWork;
             _connectionString = configuration.GetConnectionString("ShoeserSolutionDb");
         }
         public async Task<object> Register(RegisterViewModel model)
         {
             var result = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
-            if(result.FirstOrDefault() != null)
+            if (result.FirstOrDefault() != null)
             {
                 throw new Exception("This username already exist!");
             }
             var account = new Account
             {
                 Username = model.Username,
-                Password =model.Password,
-                Role=model.Role,
-                FullName=model.FullName,
-                Address=model.Address,
+                Password = model.Password,
+                Role = model.Role,
+                FullName = model.FullName,
+                Address = model.Address,
             };
             _unitOfWork.AccountRepository.Add(account);
-            return _apiResponse.Ok(_unitOfWork.Save()) ;
+            return _apiResponse.Ok(_unitOfWork.Save());
         }
         public async Task<Object> Login(LoginViewModel model)
         {
@@ -98,11 +98,36 @@ namespace Shoes_Store.Data.Service
                 signingCredentials: creds,
                 claims: claims);
 
-                return token;
+            return token;
 
-            }
         }
 
-        
-    
+        public async Task<Object> GetUserPagging(SearchAccountViewModel model)
+        {
+            var data = _unitOfWork.AccountRepository.Get(x => (model.Username == null || x.Username.Contains(model.Username)) &&
+                                                              (x.IsDelete == false));
+
+            int totalRow = data.Count();
+
+            var dataWithPage = data.Skip((model.PageIndex - 1) * model.PageSize)
+                .Take(model.PageSize)
+                .Select(x => new AccountViewModel()
+                {
+                    Id=x.Id,
+                    Username=x.Username,
+                    FullName=x.FullName,
+                    Address=x.Address,
+                    Role=x.Role
+                }).ToList();
+
+            var rs = new PagedResult<AccountViewModel>
+            {
+                TotalRecord = totalRow,
+                Items = dataWithPage
+            };
+
+            return _apiResponse.Ok(rs);
+        }
+    }
+
 }
