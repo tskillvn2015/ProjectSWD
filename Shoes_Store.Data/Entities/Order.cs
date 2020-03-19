@@ -14,7 +14,7 @@ namespace Shoes_Store.Data.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public string NameOrder { get; set; }
+        public String NameOrder { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

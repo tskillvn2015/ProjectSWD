@@ -19,7 +19,11 @@ namespace Shoes_Store.Ultility.Common
         }
         public class OrderException
         {
-            public const string O01 = "";
+            public const string O01 = "must be > 0";
+        }
+        public class HistpryException
+        {
+            public const string H01 = "This history is not existed";
         }
     }
 }

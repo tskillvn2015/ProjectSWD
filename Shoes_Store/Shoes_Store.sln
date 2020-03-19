@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoes_Store", "Shoes_Store.csproj", "{055D43D0-18EB-400F-A913-B85391E2E6D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shoes_Store", "Shoes_Store.csproj", "{055D43D0-18EB-400F-A913-B85391E2E6D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoes_Store.Data", "..\Shoes_Store.Data\Shoes_Store.Data.csproj", "{475785ED-31BA-490A-B651-6C0B750B7E18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shoes_Store.Data", "..\Shoes_Store.Data\Shoes_Store.Data.csproj", "{475785ED-31BA-490A-B651-6C0B750B7E18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoes_Store.Ultility", "..\Shoes_Store.Ultility\Shoes_Store.Ultility.csproj", "{FF50AFE3-9D47-4294-8211-5221695F04BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shoes_Store.Ultility", "..\Shoes_Store.Ultility\Shoes_Store.Ultility.csproj", "{FF50AFE3-9D47-4294-8211-5221695F04BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

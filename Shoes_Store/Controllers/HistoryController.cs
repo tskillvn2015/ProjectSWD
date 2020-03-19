@@ -8,7 +8,6 @@ using Shoes_Store.Data.ViewModels;
 
 namespace Shoes_Store.Controllers
 {
-    [Route("api/historys")]
     [ApiController]
     public class HistoryController : ControllerBase
     {
@@ -18,22 +17,19 @@ namespace Shoes_Store.Controllers
             _historyService = historyService;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetHistoryById([FromBody]HistoryViewModel model)
+        [HttpPost]
+        [Route("api/searchproductbyids")]
+        public async Task<IActionResult> SearchHistoryByID([FromBody]SearchHistoryVMs model)
         {
-            var result = _historyService.GetHistoryById(model);
+            var result = await _historyService.SearchHistoryByID(model);
+            return Ok(result);
+        }
+        [HttpGet("")]
+        public async Task<IActionResult> GetAllHistory(HistoryViewModel model)
+        {
+            var result = await _historyService.GetAllHistory(model);
             return Ok(result);
         }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //public IActionResult GetByIdAccount(Guid id)
-        //{
-        //    var result = getAllHistory.Histories.Where(c => c.IdAccount = id).FirstOrDefault();
-        //    if (result == null)
-        //        return NotFound();
-        //    return Ok(result);
-        //}
     }
 }

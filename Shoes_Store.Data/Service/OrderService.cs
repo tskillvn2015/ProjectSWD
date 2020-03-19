@@ -3,6 +3,7 @@ using Shoes_Store.Data.Entities;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
 using Shoes_Store.Interfaces;
+using Shoes_Store.Ultility.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,23 +27,26 @@ namespace Shoes_Store.Data.Service
         {
             Order order = new Order();
             order.NameOrder = model.NameOrder;
-            order.CreatedDate = DateTime.Now;
+            order.CreatedDate = DateTime.UtcNow;
             order.TotalPrice = model.TotalPrice;
-            order.IdAccount = model.IdAccount;
+            if(order.TotalPrice < 0)
+            {
+                return _apiResponse.Error("Total Price " + ShoerserException.OrderException.O01, nameof(ShoerserException.OrderException.O01));
+            }
+            order.CreatedAt = DateTime.Now;
+            //order.IdAccount = model.IdAccount;
             _unitOfWork.OrderRepository.Add(order);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
         }
 
-       public async Task<int> DeleteOrder(deleteOrderVMs model)
+       public async Task<Object> DeleteOrder(deleteOrderVMs model)
         {
-            var result = _unitOfWork.OrderRepository.Get(c=>c.Id.Equals(model.Id));
-            if(result.FirstOrDefault() == null)
-            {
-                throw new Exception("This id order not exist!");
-            }
-            _unitOfWork.OrderRepository.Delete(result);
-            return _unitOfWork.Save();
+            Order order = _unitOfWork.OrderRepository.GetByID(model.Id);
+            order.IsDelete = true;
+            _unitOfWork.OrderRepository.Update(order);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
         }
 
         

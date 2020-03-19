@@ -8,10 +8,8 @@ namespace Shoes_Store.Data.Interfaces
 {
     public interface IOrderService
     {
-        Task<object> CreateOrder(OrderViewModel model);
-        Task<int> DeleteOrder(deleteOrderVMs model);
-        
-
+        Task<Object> CreateOrder(OrderViewModel model);
+        Task<Object> DeleteOrder(deleteOrderVMs model);
 
     }
 }
