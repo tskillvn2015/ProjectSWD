@@ -17,12 +17,42 @@ namespace Shoes_Store.Controllers
         public ProductController(IProductService productService)
         {
             _productService = productService;
-        }        
+        }
+        [HttpPost]
+        [Route("api/showProductDetail")]
+        public async Task<IActionResult> ShowProductDetail([FromBody]ShowProductDetailViewModel model)
+        {
+            var rs = await _productService.ShowProductDetail(model);
+            return Ok(rs);
+        }
         [HttpPost]
         [Route("api/create")]
         public async Task<IActionResult> Create([FromBody]CreateProductViewModel model)
         {
             var rs = await _productService.CreateProduct(model);
+            return Ok(rs);
+        }
+        [HttpPost]
+        [Route("api/searchProduct")]
+        public async Task<IActionResult> SearchProduct([FromBody]SearchProductViewModel model)
+        {
+            var rs = await _productService.SearchProduct(model);
+            return Ok(rs);
+        }
+
+        [HttpPut]
+        [Route("api/update")]
+        public async Task<IActionResult> Update([FromBody]UpdateProductViewModel model)
+        {
+            var rs = await _productService.UpdateProduct(model);
+            return Ok(rs);
+        }
+
+        [HttpPut]
+        [Route("api/delete")]
+        public async Task<IActionResult> Delete([FromBody]DeleteProductViewModel model)
+        {
+            var rs = await _productService.DeleteProduct(model);
             return Ok(rs);
         }
     }
