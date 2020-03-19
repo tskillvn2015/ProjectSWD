@@ -55,5 +55,13 @@ namespace Shoes_Store.Controllers
             var rs = await _productService.DeleteProduct(model);
             return Ok(rs);
         }
+
+        [HttpGet]
+        [Route("api/showProductList")]
+        public async Task<IActionResult> ShowProductList()
+        {
+            var rs = await _productService.ShowProductList();
+            return Ok(rs);
+        }
     }
 }

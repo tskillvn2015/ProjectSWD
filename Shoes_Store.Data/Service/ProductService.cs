@@ -21,6 +21,12 @@ namespace Shoes_Store.Data.Service
             _unitOfWork = unitOfWork;
             _apiResponse = apiResponse;
         }
+        public async Task<Object> ShowProductList()
+        {
+            var listProduct = _unitOfWork.ProductRepository.Get();
+            var result = _apiResponse.Ok(listProduct);
+            return result;
+        }
         public async Task<Object> ShowProductDetail(ShowProductDetailViewModel model)
         {
             Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
