@@ -18,13 +18,14 @@ namespace Shoes_Store.Controllers
 
         [HttpPost]
         [Route("api/createorders")]
-        public async Task<IActionResult> Create([FromBody]OrderViewModel model)
+        public async Task<IActionResult> CreateOrder([FromBody]OrderViewModel model)
         {
             var result = await _orderService.CreateOrder(model);
             return Ok(result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpPut]
+        [Route("api/deleteorders")]
         public async Task<IActionResult> Delete([FromBody]deleteOrderVMs model)
         {
             var result = await _orderService.DeleteOrder(model);

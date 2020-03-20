@@ -18,22 +18,19 @@ namespace Shoes_Store.Controllers
             _historyService = historyService;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetHistoryById([FromBody]HistoryViewModel model)
-        {
-            var result = _historyService.GetHistoryById(model);
-            return Ok(result);
-        }
-
-        //[HttpGet]
-        //[Route("{id}")]
-        //public IActionResult GetByIdAccount(Guid id)
+        //[HttpPost]
+        //[Route("api/searchproductbyids")]
+        //public async Task<IActionResult> SearchHistoryByID([FromBody]SearchHistoryViewModel model)
         //{
-        //    var result = getAllHistory.Histories.Where(c => c.IdAccount = id).FirstOrDefault();
-        //    if (result == null)
-        //        return NotFound();
+        //    var result = await _historyService.SearchHistoryByID(model);
         //    return Ok(result);
         //}
+        [HttpGet]
+        [Route("api/historys")]
+        public async Task<IActionResult> GetAllHistory([FromQuery]SearchHistoryViewModel model)
+        {
+            var result = await _historyService.GetAllHistory(model);
+            return Ok(result);
+        }
     }
 }

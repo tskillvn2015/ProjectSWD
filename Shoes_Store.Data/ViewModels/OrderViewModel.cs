@@ -9,9 +9,6 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class OrderViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
 
         [Required]
         public string NameOrder { get; set; }
