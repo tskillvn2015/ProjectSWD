@@ -117,11 +117,13 @@ namespace Shoes_Store.Data.Service
                     Username=x.Username,
                     FullName=x.FullName,
                     Address=x.Address,
-                    Role=x.Role
+                    Role=x.Role.ToString()
                 }).ToList();
 
             var rs = new PagedResult<AccountViewModel>
             {
+                PageSize =model.PageSize,
+                PageIndex =model.PageIndex,
                 TotalRecord = totalRow,
                 Items = dataWithPage
             };
