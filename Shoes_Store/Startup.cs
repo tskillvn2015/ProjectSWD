@@ -66,6 +66,8 @@ namespace Shoes_Store
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IApiResponse, ApiResponse>();
+            services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IHistoryService, HistoryService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options =>

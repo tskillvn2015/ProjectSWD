@@ -8,7 +8,7 @@ namespace Shoes_Store.Data.Interfaces
 {
     public interface IHistoryService
     {
-        object GetHistoryById(HistoryViewModel model);
-        Task<object> GetAllHistory(HistoryViewModel model);
+        //Task<Object> SearchHistoryByID(SearchHistoryViewModel model);
+        Task<Object> GetAllHistory(SearchHistoryViewModel model);
     }
 }
