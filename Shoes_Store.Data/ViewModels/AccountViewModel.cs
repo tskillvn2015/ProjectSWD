@@ -11,6 +11,6 @@ namespace Shoes_Store.Data.ViewModels
         public string Username { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
-        public Role Role { get; set; }
+        public string Role { get; set; }
     }
 }
