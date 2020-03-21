@@ -9,6 +9,7 @@ namespace Shoes_Store.Ultility.Common
         public class AccountException
         {
             public const string A01 = "Username not found";
+            public const string A02 = "This account is not existed";
         }
         public class ProductException
         {

@@ -13,5 +13,6 @@ namespace Shoes_Store.Data.Interfaces
         Task<Object> Login(LoginViewModel model);
 
         Task<Object> GetUserPagging(SearchAccountViewModel model);
+        Task<Object> DeleteAccount(DeleteAccountViewModel model);
     }
 }

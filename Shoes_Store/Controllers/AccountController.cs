@@ -45,5 +45,13 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
 
+        [HttpPut]
+        [Route("api/deleteAccount")]
+        public async Task<IActionResult> DeleteAccount([FromBody]DeleteAccountViewModel model)
+        {
+            var rs = await _accountService.DeleteAccount(model);
+            return Ok(rs);
+        }
+
     }
 }

@@ -130,6 +130,19 @@ namespace Shoes_Store.Data.Service
 
             return _apiResponse.Ok(rs);
         }
+
+        public async Task<Object> DeleteAccount(DeleteAccountViewModel model)
+        {
+            Account account = _unitOfWork.AccountRepository.GetByID(model.Id);
+            if (account == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A02, nameof(ShoerserException.AccountException.A02));
+            }
+            account.IsDelete = true;
+            _unitOfWork.AccountRepository.Update(account);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
     }
 
 }
