@@ -5,13 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Shoes_Store.Data.Entities
+namespace Shoes_Store.Data.ViewModels
 {
-    [Table("Product")]
-    public class Product
+    public class UpdateProductViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public Guid Id { get; set; }
         [Required]
         public String Name { get; set; }
@@ -27,9 +25,5 @@ namespace Shoes_Store.Data.Entities
         public int Quantity { get; set; }
         [Required]
         public Status Status { get; set; }
-        
-        public List<OrderDetail> OrderDetails { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public bool IsDelete { get; set; }
     }
 }

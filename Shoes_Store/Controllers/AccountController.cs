@@ -35,5 +35,15 @@ namespace Shoes_Store.Controllers
             else
                 return BadRequest();
         }
+
+
+        [HttpGet]
+        [Route("api/Accounts")]
+        public async Task<IActionResult> GetUserPagging([FromQuery]SearchAccountViewModel model)
+        {
+            var rs = await _accountService.GetUserPagging(model);
+            return Ok(rs);
+        }
+
     }
 }

@@ -1,18 +1,13 @@
-﻿using Shoes_Store.Data.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
+using Shoes_Store.Data.Enum;
 
-namespace Shoes_Store.Data.Entities
+namespace Shoes_Store.Data.ViewModels
 {
-    [Table("Product")]
-    public class Product
+    public class CreateProductViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
         [Required]
         public String Name { get; set; }
         [Required]
@@ -27,9 +22,5 @@ namespace Shoes_Store.Data.Entities
         public int Quantity { get; set; }
         [Required]
         public Status Status { get; set; }
-        
-        public List<OrderDetail> OrderDetails { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public bool IsDelete { get; set; }
     }
 }
