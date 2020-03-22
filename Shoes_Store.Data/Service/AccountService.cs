@@ -146,7 +146,7 @@ namespace Shoes_Store.Data.Service
 
         public async Task<Object> UpdateAccount(UpdateAccountViewModel model)
         {
-            Account account = _unitOfWork.AccountRepository.GetByID(model.Username);
+            Account account = _unitOfWork.AccountRepository.GetByID(model.Id);
             if (account == null)
             {
                 return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
@@ -166,6 +166,13 @@ namespace Shoes_Store.Data.Service
  
             _unitOfWork.AccountRepository.Update(account);
             var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
+
+        public async Task<Object> SearchAccount(SearchAccountViewModel model)
+        {
+            var listAccount = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
+            var result = _apiResponse.Ok(listAccount);
             return result;
         }
     }
