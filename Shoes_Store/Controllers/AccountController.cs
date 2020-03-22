@@ -53,5 +53,12 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
 
+        [HttpPut]
+        [Route("api/updateAccount")]
+        public async Task<IActionResult> UpdateAccount([FromBody]UpdateAccountViewModel model)
+        {
+            var rs = await _accountService.UpdateAccount(model);
+            return Ok(rs);
+        }
     }
 }

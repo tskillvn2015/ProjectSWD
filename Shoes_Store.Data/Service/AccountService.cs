@@ -143,6 +143,31 @@ namespace Shoes_Store.Data.Service
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
         }
+
+        public async Task<Object> UpdateAccount(UpdateAccountViewModel model)
+        {
+            Account account = _unitOfWork.AccountRepository.GetByID(model.Username);
+            if (account == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+            }
+            account.Username = model.Username;
+            if(account.Username.Length == 0)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A03, nameof(ShoerserException.AccountException.A03));
+            }
+            account.FullName = model.Fullname;
+            if (account.FullName.Length == 0)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A04, nameof(ShoerserException.AccountException.A04));
+            }
+            account.Password = model.Password;
+            account.Address = model.Address;
+ 
+            _unitOfWork.AccountRepository.Update(account);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
     }
 
 }
