@@ -37,7 +37,7 @@ namespace Shoes_Store.Data.Service
             var result = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
             if (result.FirstOrDefault() != null)
             {
-                throw new Exception("This username already exist!");
+                throw new Exception("This username already exist");
             }
             var account = new Account
             {
@@ -129,6 +129,55 @@ namespace Shoes_Store.Data.Service
             };
 
             return _apiResponse.Ok(rs);
+        }
+
+        public async Task<Object> DeleteAccount(Guid id)
+        {
+            Account account = _unitOfWork.AccountRepository.GetByID(id);
+            if (account == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A02, nameof(ShoerserException.AccountException.A02));
+            }
+            account.IsDelete = true;
+            _unitOfWork.AccountRepository.Update(account);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
+
+        public async Task<Object> UpdateAccount(UpdateAccountViewModel model)
+        {
+            Account account = _unitOfWork.AccountRepository.GetByID(model.Id);
+            if (account == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+            }
+            account.Username = model.Username;
+            if(account.Username.Length == 0)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A03, nameof(ShoerserException.AccountException.A03));
+            }
+            account.FullName = model.Fullname;
+            if (account.FullName.Length == 0)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A04, nameof(ShoerserException.AccountException.A04));
+            }
+            account.Password = model.Password;
+            account.Address = model.Address;
+ 
+            _unitOfWork.AccountRepository.Update(account);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
+
+        public async Task<Object> SearchAccount(SearchAccountViewModel model)
+        {
+            var listAccount = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username)).FirstOrDefault();
+            if(listAccount == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+            }
+            var result = _apiResponse.Ok(listAccount);
+            return result;
         }
     }
 

@@ -45,5 +45,28 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
 
+        [HttpDelete]
+        [Route("api/Account")]
+        public async Task<IActionResult> DeleteAccount([FromQuery]Guid id)
+        {
+            var rs = await _accountService.DeleteAccount(id);
+            return Ok(rs);
+        }
+
+        [HttpPut]
+        [Route("api/Account")]
+        public async Task<IActionResult> UpdateAccount([FromBody]UpdateAccountViewModel model)
+        {
+            var rs = await _accountService.UpdateAccount(model);
+            return Ok(rs);
+        }
+
+        [HttpPost]
+        [Route("api/Account")]
+        public async Task<IActionResult> SearchAccount([FromBody]SearchAccountViewModel model)
+        {
+            var rs = await _accountService.SearchAccount(model);
+            return Ok(rs);
+        }
     }
 }

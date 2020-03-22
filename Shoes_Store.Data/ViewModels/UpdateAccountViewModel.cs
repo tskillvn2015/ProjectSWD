@@ -6,6 +6,8 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class UpdateAccountViewModel
     {
+
+        public Guid Id { get; set; }
         public string Username { get; set; }
 
         public string Password { get; set; }
