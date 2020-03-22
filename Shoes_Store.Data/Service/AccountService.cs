@@ -131,9 +131,9 @@ namespace Shoes_Store.Data.Service
             return _apiResponse.Ok(rs);
         }
 
-        public async Task<Object> DeleteAccount(DeleteAccountViewModel model)
+        public async Task<Object> DeleteAccount(Guid id)
         {
-            Account account = _unitOfWork.AccountRepository.GetByID(model.Id);
+            Account account = _unitOfWork.AccountRepository.GetByID(id);
             if (account == null)
             {
                 return _apiResponse.Error(ShoerserException.AccountException.A02, nameof(ShoerserException.AccountException.A02));

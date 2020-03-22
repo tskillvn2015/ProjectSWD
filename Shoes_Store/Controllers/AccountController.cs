@@ -47,9 +47,9 @@ namespace Shoes_Store.Controllers
 
         [HttpPut]
         [Route("api/deleteAccount")]
-        public async Task<IActionResult> DeleteAccount([FromBody]DeleteAccountViewModel model)
+        public async Task<IActionResult> DeleteAccount([FromQuery]Guid id)
         {
-            var rs = await _accountService.DeleteAccount(model);
+            var rs = await _accountService.DeleteAccount(id);
             return Ok(rs);
         }
 
