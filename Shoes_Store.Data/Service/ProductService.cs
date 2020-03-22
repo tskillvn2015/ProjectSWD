@@ -9,6 +9,7 @@ using Shoes_Store.Data.ViewModels;
 using Shoes_Store.Common;
 using Shoes_Store.Interfaces;
 using Shoes_Store.Ultility.Common;
+using System.Linq;
 
 namespace Shoes_Store.Data.Service
 {
@@ -21,10 +22,31 @@ namespace Shoes_Store.Data.Service
             _unitOfWork = unitOfWork;
             _apiResponse = apiResponse;
         }
-        public async Task<Object> ShowProductList()
+        public async Task<Object> ShowProductList(ShowProductListViewModel model)
         {
-            var listProduct = _unitOfWork.ProductRepository.Get();
-            var result = _apiResponse.Ok(listProduct);
+            var listProduct = _unitOfWork.ProductRepository.Get(c => (c.IsDelete == false));
+            int totalRow = listProduct.Count();
+            var dataWithPage = listProduct.Skip((model.PageIndex - 1) * model.PageSize)
+                .Take(model.PageSize)
+                .Select(c => new ProductViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Manufacturer = c.Manufacturer,
+                    Size = c.Size,
+                    Category = c.Category,
+                    Description = c.Description,
+                    Quantity = c.Quantity,
+                    Status = c.Status
+                }).ToList();
+            var data = new PagedResult<ProductViewModel>
+            {
+                PageSize = model.PageSize,
+                PageIndex = model.PageIndex,
+                TotalRecord = totalRow,
+                Items = dataWithPage
+            };
+            var result = _apiResponse.Ok(data);
             return result;
         }
         public async Task<Object> ShowProductDetail(ShowProductDetailViewModel model)
@@ -67,8 +89,30 @@ namespace Shoes_Store.Data.Service
 
         public async Task<Object> SearchProduct(SearchProductViewModel model)
         {
-            var listProduct = _unitOfWork.ProductRepository.Get(c => c.Name.Equals(model.Name));           
-            var result = _apiResponse.Ok(listProduct);
+            var listProduct = _unitOfWork.ProductRepository.Get(c => (model.Name == null ||c.Name.Contains(model.Name)) && 
+                                                                        (c.IsDelete == false));
+            int totalRow = listProduct.Count();
+            var dataWithPage = listProduct.Skip((model.PageIndex - 1) * model.PageSize)
+                .Take(model.PageSize)
+                .Select(c => new ProductViewModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Manufacturer = c.Manufacturer,
+                    Size = c.Size,
+                    Category = c.Category,
+                    Description = c.Description,
+                    Quantity = c.Quantity,
+                    Status = c.Status
+                }).ToList();
+            var data = new PagedResult<ProductViewModel>
+            {
+                PageSize = model.PageSize,
+                PageIndex = model.PageIndex,
+                TotalRecord = totalRow,
+                Items = dataWithPage
+            };
+            var result = _apiResponse.Ok(data);
             return result;
         }
 
