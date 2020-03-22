@@ -171,7 +171,11 @@ namespace Shoes_Store.Data.Service
 
         public async Task<Object> SearchAccount(SearchAccountViewModel model)
         {
-            var listAccount = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
+            var listAccount = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username)).FirstOrDefault();
+            if(listAccount == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+            }
             var result = _apiResponse.Ok(listAccount);
             return result;
         }
