@@ -7,7 +7,8 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class SearchProductViewModel
     {
-        [Required]
         public String Name { get; set; }
+        public int PageSize { get; set; }
+        public int PageIndex { get; set; }
     }
 }

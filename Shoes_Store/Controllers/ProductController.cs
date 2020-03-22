@@ -58,9 +58,9 @@ namespace Shoes_Store.Controllers
 
         [HttpGet]
         [Route("api/showProductList")]
-        public async Task<IActionResult> ShowProductList()
+        public async Task<IActionResult> ShowProductList([FromQuery]ShowProductListViewModel model)
         {
-            var rs = await _productService.ShowProductList();
+            var rs = await _productService.ShowProductList(model);
             return Ok(rs);
         }
     }
