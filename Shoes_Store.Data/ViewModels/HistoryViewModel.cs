@@ -9,23 +9,20 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class HistoryViewModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-
-        [Required]
         public string NameOrder { get; set; }
-
         public DateTime CreatedDate { get; set; }
-
-        [Required]
         public float TotalPrice { get; set; }
-
         public Guid IdAccount { get; set; }
-
-        [ForeignKey("IdAccount")]
-        public Account Accounts { get; set; }
     }
-  
-    
+
+    public class SearchHistoryViewModel
+    {
+        [Required]
+        public String Id { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int PageIndex { get; set; }
+    }
 }

@@ -106,7 +106,7 @@ namespace Shoes_Store.Data.Service
         {
             var data = _unitOfWork.AccountRepository.Get(x => (model.Username == null || x.Username.Contains(model.Username)) &&
                                                               (x.IsDelete == false));
-
+            
             int totalRow = data.Count();
 
             var dataWithPage = data.Skip((model.PageIndex - 1) * model.PageSize)
