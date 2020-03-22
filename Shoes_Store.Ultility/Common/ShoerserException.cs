@@ -12,6 +12,7 @@ namespace Shoes_Store.Ultility.Common
             public const string A02 = "This account is not existed";
             public const string A03 = "Username can not be blank";
             public const string A04 = "Fullname can not be blank";
+            public const string A05 = "This User is already exist";
         }
         public class ProductException
         {

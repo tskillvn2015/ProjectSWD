@@ -38,7 +38,7 @@ namespace Shoes_Store.Data.Service
             var result = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username));
             if (result.FirstOrDefault() != null)
             {
-                throw new Exception("This username already exist");
+                return _apiResponse.Error(ShoerserException.AccountException.A05,nameof(ShoerserException.AccountException.A05));
             }
             var account = new Account
             {
