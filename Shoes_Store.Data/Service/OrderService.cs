@@ -27,7 +27,6 @@ namespace Shoes_Store.Data.Service
         {
             Order order = new Order();
             order.NameOrder = model.NameOrder;
-            order.CreatedDate = DateTime.UtcNow;
             order.TotalPrice = model.TotalPrice;
             if (order.TotalPrice < 0)
             {

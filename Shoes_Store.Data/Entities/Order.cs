@@ -16,8 +16,6 @@ namespace Shoes_Store.Data.Entities
         [Required]
         public string NameOrder { get; set; }
 
-        public DateTime CreatedDate { get; set; }
-
         [Required]
         public float TotalPrice { get; set; }
 
