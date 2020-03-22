@@ -13,7 +13,5 @@ namespace Shoes_Store.Data.ViewModels
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
-        [Required]
-        public Role Role { get; set; }
     }
 }

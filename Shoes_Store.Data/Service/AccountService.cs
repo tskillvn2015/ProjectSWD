@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Entities;
+using Shoes_Store.Data.Enum;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
 using Shoes_Store.Interfaces;
@@ -43,7 +44,7 @@ namespace Shoes_Store.Data.Service
             {
                 Username = model.Username,
                 Password = model.Password,
-                Role = model.Role,
+                Role = Role.Customer,
                 FullName = model.FullName,
                 Address = model.Address,
             };
