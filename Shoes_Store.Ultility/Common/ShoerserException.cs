@@ -29,5 +29,9 @@ namespace Shoes_Store.Ultility.Common
         {
             public const string H01 = "This history is not existed";
         }
+        public class OrderDetailException
+        {
+            public const string OD01 = "Quantity must be > 0";
+        }
     }
 }
