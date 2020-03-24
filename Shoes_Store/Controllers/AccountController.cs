@@ -63,9 +63,9 @@ namespace Shoes_Store.Controllers
 
         [HttpPost]
         [Route("api/Account")]
-        public async Task<IActionResult> SearchAccount([FromBody]SearchAccountViewModel model)
+        public async Task<IActionResult> CreateAccount([FromBody]CreateAccountViewModel model)
         {
-            var rs = await _accountService.SearchAccount(model);
+            var rs = await _accountService.CreateAccount(model);
             return Ok(rs);
         }
     }

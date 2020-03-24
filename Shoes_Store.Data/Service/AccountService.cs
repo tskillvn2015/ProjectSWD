@@ -170,14 +170,24 @@ namespace Shoes_Store.Data.Service
             return result;
         }
 
-        public async Task<Object> SearchAccount(SearchAccountViewModel model)
+        public async Task<Object> CreateAccount(CreateAccountViewModel model)
         {
-            var listAccount = _unitOfWork.AccountRepository.Get(c => c.Username.Equals(model.Username)).FirstOrDefault();
-            if(listAccount == null)
+            Account account = new Account();
+            account.Username = model.Username;
+            if (account.Username.Length == 0)
             {
-                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+                return _apiResponse.Error(ShoerserException.AccountException.A03, nameof(ShoerserException.AccountException.A03));
             }
-            var result = _apiResponse.Ok(listAccount);
+            account.FullName = model.FullName;
+            if (account.FullName.Length == 0)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A04, nameof(ShoerserException.AccountException.A04));
+            }
+            account.Password = model.Password;
+            account.Address = model.Address;
+
+            _unitOfWork.AccountRepository.Add(account);
+            var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
         }
     }

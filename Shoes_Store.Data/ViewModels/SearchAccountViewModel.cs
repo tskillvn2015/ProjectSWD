@@ -6,10 +6,9 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class SearchAccountViewModel
     {
-        public string Username { get; set; }
 
+        public String Username { get; set; }
         public int PageSize { get; set; }
-
         public int PageIndex { get; set; }
     }
 }
