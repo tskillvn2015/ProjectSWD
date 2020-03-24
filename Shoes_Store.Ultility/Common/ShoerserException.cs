@@ -13,6 +13,7 @@ namespace Shoes_Store.Ultility.Common
             public const string A03 = "Username can not be blank";
             public const string A04 = "Fullname can not be blank";
             public const string A05 = "This User is already exist";
+            public const string A06 = "User role must be Admin(0), Moderator(1) or Customer(2)";
         }
         public class ProductException
         {
