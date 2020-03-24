@@ -45,6 +45,14 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
 
+        [HttpGet]
+        [Route("api/Account/detail")]
+        public async Task<IActionResult> GetUser([FromQuery]Guid id)
+        {
+            var rs = await _accountService.GetUser(id);
+            return Ok(rs);
+        }
+
         [HttpDelete]
         [Route("api/Account")]
         public async Task<IActionResult> DeleteAccount([FromQuery]Guid id)

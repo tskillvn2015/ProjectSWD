@@ -103,6 +103,27 @@ namespace Shoes_Store.Data.Service
 
         }
 
+
+        public async Task<Object> GetUser(Guid id)
+        {
+            var user = _unitOfWork.AccountRepository.GetByID(id);
+            if(user == null)
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
+            }
+            var rs = new
+            {
+                user.Id,
+                user.FullName,
+                user.Address,
+                user.Role,
+                user.CreatedAt,
+                user.IsDelete,
+            };
+            return _apiResponse.Ok(rs);
+        }
+
+
         public async Task<Object> GetUserPagging(SearchAccountViewModel model)
         {
             var data = _unitOfWork.AccountRepository.Get(x => (model.Username == null || x.Username.Contains(model.Username)) &&
@@ -152,19 +173,14 @@ namespace Shoes_Store.Data.Service
             {
                 return _apiResponse.Error(ShoerserException.AccountException.A01, nameof(ShoerserException.AccountException.A01));
             }
-            account.Username = model.Username;
-            if(account.Username.Length == 0)
-            {
-                return _apiResponse.Error(ShoerserException.AccountException.A03, nameof(ShoerserException.AccountException.A03));
-            }
             account.FullName = model.Fullname;
             if (account.FullName.Length == 0)
             {
                 return _apiResponse.Error(ShoerserException.AccountException.A04, nameof(ShoerserException.AccountException.A04));
             }
-            account.Password = model.Password;
             account.Address = model.Address;
- 
+
+            account.Role = model.Role;
             _unitOfWork.AccountRepository.Update(account);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
@@ -185,6 +201,8 @@ namespace Shoes_Store.Data.Service
             }
             account.Password = model.Password;
             account.Address = model.Address;
+            account.Role = model.Role;
+            account.CreatedAt = DateTime.Now;
 
             _unitOfWork.AccountRepository.Add(account);
             var result = _apiResponse.Ok(_unitOfWork.Save());

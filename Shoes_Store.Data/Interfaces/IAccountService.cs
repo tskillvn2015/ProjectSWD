@@ -15,5 +15,6 @@ namespace Shoes_Store.Data.Interfaces
         Task<Object> DeleteAccount(Guid id);
         Task<Object> UpdateAccount(UpdateAccountViewModel model);
         Task<Object> CreateAccount(CreateAccountViewModel model);
+        Task<Object> GetUser(Guid id);
     }
 }
