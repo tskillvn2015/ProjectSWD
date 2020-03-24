@@ -73,7 +73,6 @@ namespace Shoes_Store.Data.Service
             {
              Id = c.Id,
              NameOrder = c.NameOrder,
-             CreatedDate = c.CreatedDate,
              TotalPrice = c.TotalPrice,
              IdAccount= c.IdAccount
             }).ToList();
