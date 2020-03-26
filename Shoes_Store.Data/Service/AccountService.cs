@@ -202,8 +202,10 @@ namespace Shoes_Store.Data.Service
             account.Password = model.Password;
             account.Address = model.Address;
             account.Role = model.Role;
-            account.CreatedAt = DateTime.Now;
-
+            if(!account.Role.Equals(Role.Admin) && !account.Role.Equals(Role.Moderator) && !account.Role.Equals(Role.Customer))
+            {
+                return _apiResponse.Error(ShoerserException.AccountException.A06, nameof(ShoerserException.AccountException.A06));
+            }
             _unitOfWork.AccountRepository.Add(account);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;

@@ -16,9 +16,4 @@ namespace Shoes_Store.Data.ViewModels
         public int Quantity { get; set; }
         public Status Status { get; set; }
     }
-    public class ShowProductListViewModel
-    {
-        public int PageSize { get; set; }
-        public int PageIndex { get; set; }
-    }
 }
