@@ -32,13 +32,6 @@ namespace Shoes_Store.Controllers
             var rs = await _productService.CreateProduct(model);
             return Ok(rs);
         }
-        [HttpPost]
-        [Route("api/searchProduct")]
-        public async Task<IActionResult> SearchProduct([FromBody]SearchProductViewModel model)
-        {
-            var rs = await _productService.SearchProduct(model);
-            return Ok(rs);
-        }
 
         [HttpPut]
         [Route("api/update")]
@@ -57,10 +50,10 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpGet]
-        [Route("api/showProductList")]
-        public async Task<IActionResult> ShowProductList([FromQuery]ShowProductListViewModel model)
+        [Route("api/products")]
+        public async Task<IActionResult> getProductPagging([FromQuery]SearchProductViewModel model)
         {
-            var rs = await _productService.ShowProductList(model);
+            var rs = await _productService.getProductPagging(model);
             return Ok(rs);
         }
     }
