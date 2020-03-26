@@ -19,14 +19,14 @@ namespace Shoes_Store.Controllers
             _productService = productService;
         }
         [HttpPost]
-        [Route("api/showProductDetail")]
-        public async Task<IActionResult> ShowProductDetail([FromBody]ShowProductDetailViewModel model)
+        [Route("api/product/detail")]
+        public async Task<IActionResult> ShowProductDetail([FromQuery]Guid id)
         {
-            var rs = await _productService.ShowProductDetail(model);
+            var rs = await _productService.ShowProductDetail(id);
             return Ok(rs);
         }
         [HttpPost]
-        [Route("api/create")]
+        [Route("api/product")]
         public async Task<IActionResult> Create([FromBody]CreateProductViewModel model)
         {
             var rs = await _productService.CreateProduct(model);
@@ -34,7 +34,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPut]
-        [Route("api/update")]
+        [Route("api/product")]
         public async Task<IActionResult> Update([FromBody]UpdateProductViewModel model)
         {
             var rs = await _productService.UpdateProduct(model);
@@ -42,7 +42,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPut]
-        [Route("api/delete")]
+        [Route("api/product")]
         public async Task<IActionResult> Delete([FromBody]DeleteProductViewModel model)
         {
             var rs = await _productService.DeleteProduct(model);

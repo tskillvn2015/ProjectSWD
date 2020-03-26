@@ -9,7 +9,7 @@ namespace Shoes_Store.Data.Interfaces
 {
     public interface IProductService
     {
-        Task<Object> ShowProductDetail(ShowProductDetailViewModel model);
+        Task<Object> ShowProductDetail(Guid id);
         Task<Object> CreateProduct(CreateProductViewModel model);
         Task<Object> UpdateProduct(UpdateProductViewModel model);
         Task<Object> DeleteProduct(DeleteProductViewModel model);

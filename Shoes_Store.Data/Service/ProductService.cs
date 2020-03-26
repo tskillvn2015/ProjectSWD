@@ -22,9 +22,9 @@ namespace Shoes_Store.Data.Service
             _unitOfWork = unitOfWork;
             _apiResponse = apiResponse;
         }
-        public async Task<Object> ShowProductDetail(ShowProductDetailViewModel model)
+        public async Task<Object> ShowProductDetail(Guid id)
         {
-            Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
+            Product product = _unitOfWork.ProductRepository.GetByID(id);
             if(product == null)
             {
                 return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));
