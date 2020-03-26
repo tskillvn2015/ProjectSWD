@@ -206,6 +206,7 @@ namespace Shoes_Store.Data.Service
             {
                 return _apiResponse.Error(ShoerserException.AccountException.A06, nameof(ShoerserException.AccountException.A06));
             }
+            account.CreatedAt = DateTime.Now;
             _unitOfWork.AccountRepository.Add(account);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
