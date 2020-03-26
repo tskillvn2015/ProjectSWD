@@ -22,33 +22,6 @@ namespace Shoes_Store.Data.Service
             _unitOfWork = unitOfWork;
             _apiResponse = apiResponse;
         }
-        public async Task<Object> ShowProductList(ShowProductListViewModel model)
-        {
-            var listProduct = _unitOfWork.ProductRepository.Get(c => (c.IsDelete == false));
-            int totalRow = listProduct.Count();
-            var dataWithPage = listProduct.Skip((model.PageIndex - 1) * model.PageSize)
-                .Take(model.PageSize)
-                .Select(c => new ProductViewModel()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Manufacturer = c.Manufacturer,
-                    Size = c.Size,
-                    Category = c.Category,
-                    Description = c.Description,
-                    Quantity = c.Quantity,
-                    Status = c.Status
-                }).ToList();
-            var data = new PagedResult<ProductViewModel>
-            {
-                PageSize = model.PageSize,
-                PageIndex = model.PageIndex,
-                TotalRecord = totalRow,
-                Items = dataWithPage
-            };
-            var result = _apiResponse.Ok(data);
-            return result;
-        }
         public async Task<Object> ShowProductDetail(ShowProductDetailViewModel model)
         {
             Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
@@ -87,9 +60,9 @@ namespace Shoes_Store.Data.Service
             return result;
         }
 
-        public async Task<Object> SearchProduct(SearchProductViewModel model)
+        public async Task<Object> getProductPagging(SearchProductViewModel model)
         {
-            var listProduct = _unitOfWork.ProductRepository.Get(c => (model.Name == null ||c.Name.Contains(model.Name)) && 
+            var listProduct = _unitOfWork.ProductRepository.Get(c => (model.Name == null || c.Name.Contains(model.Name)) &&
                                                                         (c.IsDelete == false));
             int totalRow = listProduct.Count();
             var dataWithPage = listProduct.Skip((model.PageIndex - 1) * model.PageSize)
