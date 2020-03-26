@@ -18,7 +18,7 @@ namespace Shoes_Store.Controllers
         {
             _productService = productService;
         }
-        [HttpPost]
+        [HttpGet]
         [Route("api/product/detail")]
         public async Task<IActionResult> ShowProductDetail([FromQuery]Guid id)
         {
@@ -41,7 +41,7 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("api/product")]
         public async Task<IActionResult> Delete([FromBody]DeleteProductViewModel model)
         {
