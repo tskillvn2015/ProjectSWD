@@ -26,6 +26,8 @@ namespace Shoes_Store.Data.Entities
         [Required]
         public int Quantity { get; set; }
         [Required]
+        public int Price { get; set; }
+        [Required]
         public Status Status { get; set; }
         
         public List<OrderDetail> OrderDetails { get; set; }

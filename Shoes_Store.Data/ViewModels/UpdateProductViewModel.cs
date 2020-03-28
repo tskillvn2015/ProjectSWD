@@ -25,5 +25,7 @@ namespace Shoes_Store.Data.ViewModels
         public int Quantity { get; set; }
         [Required]
         public Status Status { get; set; }
+        [Required]
+        public int Price { get; set; }
     }
 }

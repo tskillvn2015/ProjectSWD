@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Shoes_Store.Controllers
@@ -17,10 +20,21 @@ namespace Shoes_Store.Controllers
 
         [HttpPost]
         [Route("api/order")]
-        public async Task<IActionResult> CreateOrder([FromBody]createOrderViewModel model)
+        public async Task<IActionResult> CreateOrder([FromBody]List<createOrderDetailViewModel> listModel)
         {
-            var result = await _orderService.CreateOrder(model);
-            return Ok(result);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity.IsAuthenticated)
+            {
+                Guid id =Guid.Parse(identity.FindFirst("Id").Value);
+
+                var result = await _orderService.CreateOrder(listModel,id);
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest("token valid");
+            }
+            
         }
 
         [HttpDelete]

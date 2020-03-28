@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shoes_Store.Data.EF;
 using Shoes_Store.Data.Interfaces;
 using System;
@@ -53,9 +54,9 @@ namespace Shoes_Store.Data.Repositories
             return dbSet.Find(id);
         }
 
-        public virtual void Add(T entity)
+        public virtual EntityEntry<T> Add(T entity)
         {
-            dbSet.Add(entity);
+            return dbSet.Add(entity);
         }
 
         public virtual void Delete(object id)

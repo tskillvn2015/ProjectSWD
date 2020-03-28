@@ -9,11 +9,8 @@ namespace Shoes_Store.Data.ViewModels
 {
     public class createOrderViewModel
     {
-        [Required]
-        public string NameOrder { get; set; }
-        public DateTime CreatedDate { get; set; }
-        [Required]
-        public float TotalPrice { get; set; }
+        public int Quantity { get; set; }
+        public Guid ProductId { get; set; }
         public Guid IdAccount { get; set; }
 
         //[ForeignKey("IdAccount")]

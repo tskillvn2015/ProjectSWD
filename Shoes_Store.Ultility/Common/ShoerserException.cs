@@ -25,6 +25,7 @@ namespace Shoes_Store.Ultility.Common
         public class OrderException
         {
             public const string O01 = "must be > 0";
+            public const string O02 = "no item in cart";
         }
         public class HistpryException
         {
@@ -33,6 +34,7 @@ namespace Shoes_Store.Ultility.Common
         public class OrderDetailException
         {
             public const string OD01 = "Quantity must be > 0";
+            public const string OD02 = "Quantity must not large than current Quantity Of Product";
         }
     }
 }
