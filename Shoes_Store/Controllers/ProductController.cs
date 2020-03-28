@@ -43,9 +43,9 @@ namespace Shoes_Store.Controllers
 
         [HttpDelete]
         [Route("api/product")]
-        public async Task<IActionResult> Delete([FromBody]DeleteProductViewModel model)
+        public async Task<IActionResult> Delete([FromQuery]Guid id)
         {
-            var rs = await _productService.DeleteProduct(model);
+            var rs = await _productService.DeleteProduct(id);
             return Ok(rs);
         }
 

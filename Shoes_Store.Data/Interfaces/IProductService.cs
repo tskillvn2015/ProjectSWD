@@ -12,7 +12,7 @@ namespace Shoes_Store.Data.Interfaces
         Task<Object> ShowProductDetail(Guid id);
         Task<Object> CreateProduct(CreateProductViewModel model);
         Task<Object> UpdateProduct(UpdateProductViewModel model);
-        Task<Object> DeleteProduct(DeleteProductViewModel model);
+        Task<Object> DeleteProduct(Guid id);
         Task<Object> getProductPagging(SearchProductViewModel model);
     }
 }

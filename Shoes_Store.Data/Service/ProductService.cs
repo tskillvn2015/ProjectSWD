@@ -120,12 +120,12 @@ namespace Shoes_Store.Data.Service
             return result;
         }
 
-        public async Task<Object> DeleteProduct(DeleteProductViewModel model)
+        public async Task<Object> DeleteProduct(Guid id)
         {
-            Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
+            Product product = _unitOfWork.ProductRepository.GetByID(id);
             if (product == null)
             {
-                return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));
+                return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));//
             }
             product.IsDelete = true;
             _unitOfWork.ProductRepository.Update(product);
