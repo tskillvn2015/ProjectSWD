@@ -1,4 +1,5 @@
 ﻿using Shoes_Store.Data.ViewModels;
+using Shoes_Store.Ultility.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,7 @@ namespace Shoes_Store.Data.Interfaces
         Task<Object> DeleteOrderDetail(deleteOrderDetailViewModel model);
         Task<Object> UpdateOrderDetail(updateOrderDetailViewModel model);
         Task<Object> GetAllOrderDetail(searchOrderDetailViewModel model);
+
+        Task<Response> CreateOrderDetailBatch(createOrderDetailViewModel model);
     }
 }

@@ -21,7 +21,6 @@ namespace Shoes_Store.Data.ViewModels
         public Guid IdProduct { get; set; }
         [Required]
         public Guid IdOrder { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
     public class deleteOrderDetailViewModel 
     {

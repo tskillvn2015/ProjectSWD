@@ -23,18 +23,41 @@ namespace Shoes_Store.Data.Service
         }
         public async Task<Object> CreateOrderDetail(createOrderDetailViewModel model)
         {
-            OrderDetail orderdetail = new OrderDetail();
-            orderdetail.Quantity = model.Quantity;
-            if (orderdetail.Quantity <0)
+            var checkBatch = await CreateOrderDetailBatch(model);
+            if (!checkBatch.Code.Equals("200"))
+            {
+                return checkBatch;
+            }
+            var result = _apiResponse.Ok(_unitOfWork.Save());
+            return result;
+        }
+
+        public async Task<Response> CreateOrderDetailBatch(createOrderDetailViewModel model)
+        {
+            if (model.Quantity < 0)
             {
                 return _apiResponse.Error(ShoerserException.OrderDetailException.OD01, nameof(ShoerserException.OrderDetailException.OD01));
             }
+
+            var product = _unitOfWork.ProductRepository.Get(x => x.IsDelete == false && x.Id == model.IdProduct).FirstOrDefault();
+            if (product == null)
+            {
+                return _apiResponse.Error(ShoerserException.ProductException.P03, nameof(ShoerserException.ProductException.P03));
+            }
+            if(model.Quantity > product.Quantity)
+            {
+                return _apiResponse.Error(ShoerserException.OrderDetailException.OD02, nameof(ShoerserException.OrderDetailException.OD02));
+            }
+            
+
+            OrderDetail orderdetail = new OrderDetail();
+            orderdetail.Quantity = model.Quantity;
+            
             orderdetail.IdProduct = model.IdProduct;
             orderdetail.IdOrder = model.IdOrder;
             orderdetail.CreatedAt = DateTime.UtcNow;
             _unitOfWork.OrderDetailRepository.Add(orderdetail);
-            var result = _apiResponse.Ok(_unitOfWork.Save());
-            return result;
+            return _apiResponse.Ok("Success Add batch order detail");
         }
 
         public async Task<Object> DeleteOrderDetail(deleteOrderDetailViewModel model)

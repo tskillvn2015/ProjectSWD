@@ -34,27 +34,34 @@ namespace Shoes_Store.Data.Service
         }
         public async Task<Object> CreateProduct(CreateProductViewModel model)
         {
+            if(model.price <= 0)
+            {
+                return _apiResponse.Error("Price " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+
+            }
+            if (model.Size <= 0)
+            {
+                return _apiResponse.Error("Size " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+            }
+            if(model.Category.Length > 200)
+            {
+              return _apiResponse.Error(ShoerserException.ProductException.P02, nameof(ShoerserException.ProductException.P02));
+            }
+            
+            if (model.Quantity <= 0)
+            {
+                return _apiResponse.Error("Quantity " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+            }
             Product product = new Product();
             product.Name = model.Name;
             product.Manufacturer = model.Manufacturer;
             product.Size = model.Size;
-            if (product.Size <= 0)
-            {
-                return _apiResponse.Error("Size " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
-            }
-            product.Category = model.Category;
-            if(product.Category.Length > 200)
-            {
-              return _apiResponse.Error(ShoerserException.ProductException.P02, nameof(ShoerserException.ProductException.P02));
-            }
+            product.Status = model.Status;
             product.Description = model.Description;
             product.Quantity = model.Quantity;
-            if (product.Quantity <= 0)
-            {
-                return _apiResponse.Error("Quantity " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
-            }
-            product.Status = model.Status;
+            product.Category = model.Category;
             product.CreatedAt = DateTime.Now;
+            product.Price = model.price;
             _unitOfWork.ProductRepository.Add(product);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
@@ -76,7 +83,8 @@ namespace Shoes_Store.Data.Service
                     Category = c.Category,
                     Description = c.Description,
                     Quantity = c.Quantity,
-                    Status = c.Status
+                    Status = c.Status,
+                    Price = c.Price,
                 }).ToList();
             var data = new PagedResult<ProductViewModel>
             {
@@ -91,6 +99,24 @@ namespace Shoes_Store.Data.Service
 
         public async Task<Object> UpdateProduct(UpdateProductViewModel model)
         {
+            if (model.Price <= 0)
+            {
+                return _apiResponse.Error("Price " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+
+            }
+            if (model.Size <= 0)
+            {
+                return _apiResponse.Error("Size " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+            }
+            if (model.Category.Length > 200)
+            {
+                return _apiResponse.Error(ShoerserException.ProductException.P02, nameof(ShoerserException.ProductException.P02));
+            }
+
+            if (model.Quantity <= 0)
+            {
+                return _apiResponse.Error("Quantity " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
+            }
             Product product = _unitOfWork.ProductRepository.GetByID(model.Id);
             if (product == null)
             {
@@ -99,22 +125,12 @@ namespace Shoes_Store.Data.Service
             product.Name = model.Name;
             product.Manufacturer = model.Manufacturer;
             product.Size = model.Size;
-            if (product.Size <= 0)
-            {
-                return _apiResponse.Error("Size " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
-            }
             product.Category = model.Category;
-            if (product.Category.Length > 200)
-            {
-                return _apiResponse.Error(ShoerserException.ProductException.P02, nameof(ShoerserException.ProductException.P02));
-            }
             product.Description = model.Description;
             product.Quantity = model.Quantity;
-            if (product.Quantity <= 0)
-            {
-                return _apiResponse.Error("Quantity " + ShoerserException.ProductException.P01, nameof(ShoerserException.ProductException.P01));
-            }
             product.Status = model.Status;
+            product.Price = model.Price;
+
             _unitOfWork.ProductRepository.Update(product);
             var result = _apiResponse.Ok(_unitOfWork.Save());
             return result;
