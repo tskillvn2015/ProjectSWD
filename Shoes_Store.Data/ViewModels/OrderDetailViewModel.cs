@@ -9,8 +9,11 @@ namespace Shoes_Store.Data.ViewModels
     {
         public Guid Id { get; set; }
         public int Quantity { get; set; }
-        public Guid IdProduct { get; set; }
-        public Guid IdOrder { get; set; }
+        public string NameProduct { get; set; }
+
+        public string NameOrder { get; set; }
+
+        public float Price { get; set; }
         public DateTime CreatedAt { get; set; }
     }
     public class createOrderDetailViewModel
