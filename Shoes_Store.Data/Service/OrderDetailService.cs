@@ -71,18 +71,23 @@ namespace Shoes_Store.Data.Service
 
         public async Task<Object> GetAllOrderDetail(searchOrderDetailViewModel model)
         {
-            var data = _unitOfWork.OrderDetailRepository.Get(c => (model.Id == null || c.Id.ToString().Contains(model.Id.ToString())) && c.IsDelete == false);
+            var data = from od in _unitOfWork.OrderDetailRepository.Get()
+                            join o in _unitOfWork.OrderRepository.Get() on od.IdOrder equals o.Id
+                            join p in _unitOfWork.ProductRepository.Get() on od.IdProduct equals p.Id
+                            where od.IdOrder == model.Id && o.IsDelete == false
+                            select new OrderDetailViewModel()
+                            {
+                                Id = od.Id,
+                                NameProduct = p.Name,
+                                NameOrder = o.NameOrder,
+                                Price = p.Price,
+                                Quantity = od.Quantity,
+                                CreatedAt = od.CreatedAt,
+                            };
             
             int totalRow = data.Count();
 
-            var dataWithPage = data.Skip((model.PageIndex - 1) * model.PageSize).Take(model.PageSize).Select(c => new OrderDetailViewModel()
-            {
-                Id = c.Id,
-                IdProduct = c.IdProduct,
-                IdOrder = c.IdOrder,
-                Quantity = c.Quantity,
-                CreatedAt = c.CreatedAt
-            }).ToList();
+            var dataWithPage = data.Skip((model.PageIndex - 1) * model.PageSize).Take(model.PageSize).ToList();
             var result = new PagedResult<OrderDetailViewModel>
             {
                 PageSize = model.PageSize,

@@ -67,6 +67,7 @@ namespace Shoes_Store
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IApiResponse, ApiResponse>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IOrderDetailService, OrderDetailService>();
             services.AddTransient<IHistoryService, HistoryService>();
 
             services.AddControllers()
