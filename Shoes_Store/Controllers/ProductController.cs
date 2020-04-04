@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shoes_Store.Data.Entities;
@@ -26,6 +27,7 @@ namespace Shoes_Store.Controllers
             return Ok(rs);
         }
         [HttpPost]
+        [Authorize]
         [Route("api/product")]
         public async Task<IActionResult> Create([FromBody]CreateProductViewModel model)
         {
@@ -34,6 +36,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("api/product")]
         public async Task<IActionResult> Update([FromBody]UpdateProductViewModel model)
         {
@@ -42,6 +45,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("api/product")]
         public async Task<IActionResult> Delete([FromQuery]Guid id)
         {

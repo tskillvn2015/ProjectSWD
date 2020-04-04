@@ -45,9 +45,10 @@ namespace Shoes_Store
         public void ConfigureServices(IServiceCollection services)
         {
             //Validate Token
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]));
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]));
                 opt.TokenValidationParameters = new TokenValidationParameters
                 {
                     //what to validate
