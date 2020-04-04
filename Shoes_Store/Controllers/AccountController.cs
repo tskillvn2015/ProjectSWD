@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,8 +42,19 @@ namespace Shoes_Store.Controllers
         [Route("api/Accounts")]
         public async Task<IActionResult> GetUserPagging([FromQuery]SearchAccountViewModel model)
         {
-            var rs = await _accountService.GetUserPagging(model);
-            return Ok(rs);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity.IsAuthenticated)
+            {
+                Guid id = Guid.Parse(identity.FindFirst("Id").Value);
+
+                var rs = await _accountService.GetUserPagging(model,id);
+                return Ok(rs);
+            }
+            else
+            {
+                return BadRequest("token valid");
+            }
+            
         }
 
         [HttpGet]

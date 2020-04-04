@@ -13,6 +13,17 @@ namespace Shoes_Store.Data.EF
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //seeding data
+            modelBuilder.Entity<Account>().HasData(new Account() { 
+                Id = Guid.NewGuid(),
+                Username ="sa",
+                Password = "123",
+                Role = Enum.Role.Admin,
+            });
+        }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<History> History { get; set; }
         public DbSet<Order> Orders { get; set; }

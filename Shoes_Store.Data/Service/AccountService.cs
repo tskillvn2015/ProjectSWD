@@ -124,10 +124,11 @@ namespace Shoes_Store.Data.Service
         }
 
 
-        public async Task<Object> GetUserPagging(SearchAccountViewModel model)
+        public async Task<Object> GetUserPagging(SearchAccountViewModel model,Guid currentUser)
         {
             var data = _unitOfWork.AccountRepository.Get(x => (model.Username == null || x.Username.Contains(model.Username)) &&
-                                                              (x.IsDelete == false));
+                                                              (x.IsDelete == false) &&
+                                                              (x.Id != currentUser));
             
             int totalRow = data.Count();
 
