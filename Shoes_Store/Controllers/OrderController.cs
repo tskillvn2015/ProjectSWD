@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shoes_Store.Data.Interfaces;
 using Shoes_Store.Data.ViewModels;
 using System;
@@ -19,6 +20,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("api/order")]
         public async Task<IActionResult> CreateOrder([FromBody]List<createOrderDetailViewModel> listModel)
         {
@@ -38,6 +40,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("api/order")]
         public async Task<IActionResult> Delete([FromBody]deleteOrderVMs model)
         {
@@ -46,6 +49,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("api/order")]
         public async Task<IActionResult> Update([FromBody]updateOrderViewModel model)
         {
@@ -54,6 +58,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/orders")]
         public async Task<IActionResult> GetOrderByName([FromQuery]searchOrderViewModel model)
         {
@@ -70,6 +75,7 @@ namespace Shoes_Store.Controllers
             _orderdetailService = orderdetailService;
         }
         [HttpPost]
+        [Authorize]
         [Route("api/orderdetail")]
         public async Task<IActionResult> CreateOrder([FromBody]createOrderDetailViewModel model)
         {
@@ -78,6 +84,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("api/orderdetail")]
         public async Task<IActionResult> Delete([FromBody]deleteOrderDetailViewModel model)
         {
@@ -86,6 +93,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("api/orderdetail")]
         public async Task<IActionResult> Update([FromBody]updateOrderDetailViewModel model)
         {
@@ -94,6 +102,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/orderdetails")]
         public async Task<IActionResult> GetOrderByName([FromQuery]searchOrderDetailViewModel model)
         {

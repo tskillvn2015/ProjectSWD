@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shoes_Store.Data.Entities;
@@ -39,6 +40,7 @@ namespace Shoes_Store.Controllers
 
 
         [HttpGet]
+        [Authorize]
         [Route("api/Accounts")]
         public async Task<IActionResult> GetUserPagging([FromQuery]SearchAccountViewModel model)
         {
@@ -58,6 +60,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("api/Account/detail")]
         public async Task<IActionResult> GetUser([FromQuery]Guid id)
         {
@@ -66,6 +69,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("api/Account")]
         public async Task<IActionResult> DeleteAccount([FromQuery]Guid id)
         {
@@ -82,6 +86,7 @@ namespace Shoes_Store.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("api/Account")]
         public async Task<IActionResult> CreateAccount([FromBody]CreateAccountViewModel model)
         {
