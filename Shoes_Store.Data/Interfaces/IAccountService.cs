@@ -11,7 +11,7 @@ namespace Shoes_Store.Data.Interfaces
     {
         Task<Object> Register(RegisterViewModel model);
         Task<Object> Login(LoginViewModel model);
-        Task<Object> GetUserPagging(SearchAccountViewModel model);
+        Task<Object> GetUserPagging(SearchAccountViewModel model,Guid currentUser);
         Task<Object> DeleteAccount(Guid id);
         Task<Object> UpdateAccount(UpdateAccountViewModel model);
         Task<Object> CreateAccount(CreateAccountViewModel model);
